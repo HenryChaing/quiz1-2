@@ -102,7 +102,24 @@ static struct TreeNode *buildTree()
     return dfs( 0, node_count - 1,  0, node_count - 1);
 }
 
+void level_order_search(struct TreeNode *BT){
+    node[end++] = BT;
+    printf("BFS ( binarytree ) = [ ");
+    while(front != end){
+        struct TreeNode *pop_node = node[front++];
+        if(!pop_node){
+            printf("NULL, ");
+        }else{
+            printf("%d, ",pop_node->val);
+            node[end++] = pop_node->left;
+            node[end++] = pop_node->right;
+        }
+    }
+    printf(" ]\n");
+}
+
 int main(){
     node_count = sizeof(inorder)/sizeof(inorder[0]);
     struct TreeNode *BT = buildTree();
+    level_order_search(BT);
 }
