@@ -78,6 +78,16 @@ void quick_sort(node_t **list)
     while (i >= 0) {
         node_t *L = begin[i], *R = end[i];
         if (L != R) {
+            /*adapt midian of three*/
+            /*middle is lowbound of n/2*/
+            node_t *M = list_mid(&L);
+            /*find the median*/
+            M = determine_med(L,M,R);
+
+            long temp = M->value;
+            M->value = L->value;
+            L->value = temp;
+
             node_t *pivot = L;
             value = pivot->value;
             node_t *p = pivot->next;
