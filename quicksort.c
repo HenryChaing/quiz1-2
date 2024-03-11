@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "list.h"
 
 node_t *determine_med(node_t *L,node_t *M,node_t *R)
@@ -120,7 +121,7 @@ void quick_sort(node_t **list)
 int main(int argc, char **argv)
 {
     node_t *list = NULL;
-
+    clock_t t;
     size_t count = 100000;
 
     int *test_arr = malloc(sizeof(int) * count);
@@ -132,16 +133,13 @@ int main(int argc, char **argv)
     while (count--)
         list = list_construct(list, test_arr[count]);
     
+    t = clock();
     quick_sort(&list);
+    t = clock() - t;
+    printf("%f seconds.\n",((float)t) / CLOCKS_PER_SEC);
+
     assert(list_is_ordered(list));
     
-    node_t *p = list;
-    while (p)
-    {
-        printf("%ld,",p->value);
-        p = p->next;
-    }
-    printf("\n");
 
     list_free(&list);
 
