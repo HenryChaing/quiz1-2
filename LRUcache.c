@@ -180,3 +180,12 @@ void lRUCachePut(LRUCache *obj, int key, int value)
     }
     cache->value = value;
 }
+
+int main(){
+    LRUCache *cache  = lRUCacheCreate(2);
+    lRUCachePut(cache,0,100);
+    lRUCachePut(cache,1,200);
+    lRUCachePut(cache,2,300);
+    printf("[key:value] = {[0,%d],[1,%d],[2,%d]}\n",lRUCacheGet(cache,0),lRUCacheGet(cache,1),lRUCacheGet(cache,2));    
+    lRUCacheFree(cache);
+}
