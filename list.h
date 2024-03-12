@@ -32,8 +32,21 @@ int list_length(node_t **left)
 /*lead to mid node*/
 node_t *list_mid(node_t **left)
 {
-    int mid = list_length(left)/2 -1;
-    for (int i = 0; i < mid; i++)
+    node_t *slow,*fast;
+    slow = fast = &left;
+    while (fast && fast->next)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }    
+    return slow;
+}
+
+/*lead to random node*/
+node_t *list_random(node_t **left)
+{
+    int random = rand()%list_length(left) -1;
+    for (int i = 0; i < random; i++)
     {
         left = &((*left)->next);
     }    

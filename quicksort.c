@@ -6,27 +6,31 @@
 #include <time.h>
 #include "list.h"
 
-node_t *determine_med(node_t *L,node_t *M,node_t *R)
+void determine_med(node_t *L,node_t *M,node_t *R)
 {
-    if(L->value > R->value){
-        if(L->value > M->value){
-            if(R->value > M->value){
-                return R;
+    long L_value = L->value;
+    long M_value = M->value;
+    long R_value = R->value;
+    
+    if(L_value > R_value){
+        if(L_value > M_value){
+            if(R_value > M_value){
+                R->value = L_value;
+                L->value = R_value;
             }else{
-                return M;
+                M->value = L_value;
+                L->value = M_value;
             }
-        }else{
-            return L;
         }
     }else{
-        if(R->value > M->value){
-            if(L->value > M->value){
-                return L;
-            }else{
-                return M;
+        if(R_value > M_value){
+            if(L_value <= M_value){
+                M->value = L_value;
+                L->value = M_value;
             }
         }else{
-            return R;
+            R->value = L_value;
+            L->value = R_value;
         }
     }
 }
@@ -83,12 +87,14 @@ void quick_sort(node_t **list)
             /*middle is lowbound of n/2*/
             node_t *M = list_mid(&L);
             /*find the median*/
-            M = determine_med(L,M,R);
-
+            determine_med(L,M,R);
+            
+            /*
+            node_t *M = list_random(&L);
             long temp = M->value;
             M->value = L->value;
             L->value = temp;
-
+            */
             node_t *pivot = L;
             value = pivot->value;
             node_t *p = pivot->next;
